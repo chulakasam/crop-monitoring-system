@@ -1,4 +1,4 @@
 package com.example.Proposed.Crop.monitoring.system.util;
 
-public class AppUtill {
+public class AppUtil {
 }
