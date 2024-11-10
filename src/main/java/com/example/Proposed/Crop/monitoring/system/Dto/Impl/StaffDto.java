@@ -1,5 +1,6 @@
-package com.example.Proposed.Crop.monitoring.system.Dto;
+package com.example.Proposed.Crop.monitoring.system.Dto.Impl;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.VehicleEntity;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class StaffDto implements StaffStatus{
+public class StaffDto implements StaffStatus {
     private String id;
     private String first_name;
     private String last_name;
@@ -24,6 +25,6 @@ public class StaffDto implements StaffStatus{
     private String contact_no;
     private String email;
     private String role;
-    private List<FieldEntity> fields;
-    private List<VehicleEntity> vehicles;
+    private List<FieldDto> fields;
+    private List<VehicleDto> vehicles;
 }

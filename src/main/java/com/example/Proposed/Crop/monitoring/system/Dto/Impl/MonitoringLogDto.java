@@ -1,5 +1,6 @@
-package com.example.Proposed.Crop.monitoring.system.Dto;
+package com.example.Proposed.Crop.monitoring.system.Dto.Impl;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.MonitoringLogStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.CropEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
@@ -16,13 +17,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MonitoringLogDto implements MonitoringLogStatus{
+public class MonitoringLogDto implements MonitoringLogStatus {
 
     private String log_code;
     private String log_date;
     private String log_details;
     private String observed_image;
-    private List<FieldEntity> fields;
-    private List<CropEntity> crops;
-    private List<StaffEntity> staff;
+    private List<FieldDto> fields;
+    private List<CropDto> crops;
+    private List<StaffDto> staff;
 }

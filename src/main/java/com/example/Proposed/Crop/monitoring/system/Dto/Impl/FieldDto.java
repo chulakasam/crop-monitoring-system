@@ -1,5 +1,6 @@
-package com.example.Proposed.Crop.monitoring.system.Dto;
+package com.example.Proposed.Crop.monitoring.system.Dto.Impl;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.FieldStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.CropEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
 import jakarta.persistence.*;
@@ -12,13 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FieldDto implements FieldStatus{
+public class FieldDto implements FieldStatus {
     private String field_code;
     private String field_name;
     private String location;
     private Double extent_size;
     private String field_image1;
     private String field_image2;
-    private List<CropEntity> crops;
-    private List<StaffEntity> allocated_staff;
+    private List<CropDto> crops;
+    private List<StaffDto> allocated_staff;
 }

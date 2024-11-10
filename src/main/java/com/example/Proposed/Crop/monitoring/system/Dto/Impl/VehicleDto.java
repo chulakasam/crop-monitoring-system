@@ -1,5 +1,6 @@
-package com.example.Proposed.Crop.monitoring.system.Dto;
+package com.example.Proposed.Crop.monitoring.system.Dto.Impl;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.VehicleStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -18,5 +19,5 @@ public class VehicleDto implements VehicleStatus {
     private String fuelType;
     private String status;
     private String remarks;
-    private StaffEntity assigned_staff;
+    private StaffDto assigned_staff;
 }
