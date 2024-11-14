@@ -1,9 +1,11 @@
 package com.example.Proposed.Crop.monitoring.system.util;
 
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.CropDto;
+import com.example.Proposed.Crop.monitoring.system.Dto.Impl.EquipmentDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.VehicleDto;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.CropEntity;
+import com.example.Proposed.Crop.monitoring.system.Entity.Impl.EquipmentEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.VehicleEntity;
 import org.modelmapper.ModelMapper;
@@ -47,7 +49,16 @@ public class Mapping {
         return modelMapper.map(vehicleEntity, VehicleDto.class);
     }
 
-    public List<VehicleDto> toVehicleDTOList(List<VehicleEntity> vehicleEntitiesList) {
-        return modelMapper.map(vehicleEntitiesList,new TypeToken<List<VehicleDto>>() {}.getType());
+    public List<VehicleDto> toVehicleDTOList(List<VehicleEntity> vehicleEntitiesList) {return modelMapper.map(vehicleEntitiesList,new TypeToken<List<VehicleDto>>() {}.getType());
+    }
+
+    public EquipmentEntity toEquipmentEntity(EquipmentDto equipmentDto) {
+        return modelMapper.map(equipmentDto, EquipmentEntity.class);
+    }
+    public EquipmentDto toEquipmentDTO(EquipmentEntity equipmentEntity) {
+        return modelMapper.map(equipmentEntity, EquipmentDto.class);
+    }
+
+    public List<EquipmentDto> toDTOList(List<VehicleEntity> vehicleEntitiesList) {return modelMapper.map(vehicleEntitiesList,new TypeToken<List<VehicleDto>>() {}.getType());
     }
 }

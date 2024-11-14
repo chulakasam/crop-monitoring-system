@@ -35,7 +35,6 @@ public class VehicleController {
     }
     @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleStatus getSelectedVehicle(@PathVariable ("vehicleCode") String vehicleCode) {
-
         return vehicleService.getVehicle(vehicleCode);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +58,6 @@ public class VehicleController {
     @PutMapping(value = "/{vehicleCode}")
     public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleCode") String vehicleCode,
                                               @RequestBody VehicleDto vehicleDTO) {
-
         try {
 
             vehicleService.updateVehicle(vehicleCode, vehicleDTO);
