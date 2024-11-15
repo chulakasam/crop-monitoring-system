@@ -5,6 +5,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.FieldStatus;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
 import com.example.Proposed.Crop.monitoring.system.customStatusCodes.SelectedUserErrorStatus;
+import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.exception.FieldNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -44,6 +46,15 @@ public class FieldServiceImpl implements FieldService{
         return mapping.asFieldDTOList(fieldDao.findAll());
     }
 
+    @Override
+    public void deleteField(String fieldCode) {
+        Optional<FieldEntity> selectedField = fieldDao.findById(fieldCode);
+        if(!selectedField.isPresent()){
+            throw new FieldNotFoundException("Field not found!!!");
+        }else{
+            fieldDao.deleteById(fieldCode);
+        }
+    }
 
 
 }

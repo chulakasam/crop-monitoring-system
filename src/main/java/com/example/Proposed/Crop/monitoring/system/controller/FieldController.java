@@ -4,6 +4,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.FieldStatus;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.CropDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
+import com.example.Proposed.Crop.monitoring.system.exception.CropNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.service.FieldService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
@@ -78,6 +79,20 @@ public class FieldController {
         return fieldService.getAllFields();
     }
 
+
+    @DeleteMapping(value = "/{fieldCode}")
+    public ResponseEntity<Void> deleteField(@PathVariable("fieldCode") String fieldCode){
+        try {
+           fieldService.deleteField(fieldCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CropNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

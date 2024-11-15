@@ -12,4 +12,6 @@ public interface FieldService {
 
     List<FieldDto> getAllFields();
 
+    void deleteField(String fieldCode);
+
 }
