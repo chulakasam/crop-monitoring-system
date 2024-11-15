@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class EquipmentServiceImpl implements EquipmentService{
@@ -34,6 +36,11 @@ public class EquipmentServiceImpl implements EquipmentService{
         } else {
             return new SelectedUserErrorStatus(2,"Selected Equipment not found");
         }
+    }
+
+    @Override
+    public List<EquipmentDto> getAllEquipment() {
+        return mapping.toEquipmentDTOList(equipmentDao.findAll());
     }
 
 
