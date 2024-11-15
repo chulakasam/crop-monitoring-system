@@ -56,4 +56,20 @@ public class EquipmentController {
     }
 
 
+    @PutMapping(value = "/{equipmentId}")
+    public ResponseEntity<Void> updateEquipment(@PathVariable("equipmentId") String equipmentId,
+                                                @RequestBody EquipmentDto equipmentDto){
+        try{
+            equipmentService.updateEquipment(equipmentId,equipmentDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (DataPersistException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

@@ -54,5 +54,17 @@ public class EquipmentServiceImpl implements EquipmentService{
         }
     }
 
+    @Override
+    public void updateEquipment(String equipmentId, EquipmentDto equipmentDto) {
+        Optional<EquipmentEntity> tmpEquipment = equipmentDao.findById(equipmentId);
+        if(!tmpEquipment.isPresent()){
+            throw new DataPersistException("Equipment not found !!!");
+        }else {
+            tmpEquipment.get().setName(equipmentDto.getName());
+            tmpEquipment.get().setType(equipmentDto.getType());
+            tmpEquipment.get().setStatus(equipmentDto.getStatus());
+        }
+    }
+
 
 }
