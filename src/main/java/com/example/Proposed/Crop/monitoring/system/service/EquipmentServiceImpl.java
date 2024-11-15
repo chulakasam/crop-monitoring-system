@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -41,6 +42,16 @@ public class EquipmentServiceImpl implements EquipmentService{
     @Override
     public List<EquipmentDto> getAllEquipment() {
         return mapping.toEquipmentDTOList(equipmentDao.findAll());
+    }
+
+    @Override
+    public void deleteEquipment(String equipmentId) {
+        Optional<EquipmentEntity> foundEquipment = equipmentDao.findById(equipmentId);
+        if(!foundEquipment.isPresent()){
+            throw new DataPersistException("Equipment not found !!!");
+        }else{
+            equipmentDao.deleteById(equipmentId);
+        }
     }
 
 

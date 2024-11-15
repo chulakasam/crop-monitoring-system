@@ -12,4 +12,5 @@ public interface EquipmentService {
 
     List<EquipmentDto> getAllEquipment();
 
+    void deleteEquipment(String equipmentId);
 }
