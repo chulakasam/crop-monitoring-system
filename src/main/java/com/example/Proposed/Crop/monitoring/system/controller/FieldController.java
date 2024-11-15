@@ -73,6 +73,11 @@ public class FieldController {
         return fieldService.getField(fieldCode);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FieldDto> getAllFields(){
+        return fieldService.getAllFields();
+    }
+
 
 
 }

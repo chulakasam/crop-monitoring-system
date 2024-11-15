@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -37,4 +38,11 @@ public class FieldServiceImpl implements FieldService{
             return new SelectedUserErrorStatus(2,"Selected Field not found !!!");
         }
     }
+
+    @Override
+    public List<FieldDto> getAllFields() {
+        return mapping.asFieldDTOList(fieldDao.findAll());
+    }
+
+
 }
