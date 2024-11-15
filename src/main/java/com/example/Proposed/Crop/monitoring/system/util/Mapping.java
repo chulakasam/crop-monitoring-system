@@ -60,7 +60,20 @@ public class Mapping {
     }
 
 
+    public StaffEntity toStaffEntity(StaffDto staffDTO) {
+        return modelMapper.map(staffDTO, StaffEntity.class);
+    }
+
+    public StaffDto toStaffDTO(StaffEntity staffEntity) {
+        return modelMapper.map(staffEntity, StaffDto.class);
+    }
+
+    public List<StaffDto> toStaffDTOList(List<StaffEntity> staffEntitiesList) {
+        return modelMapper.map(staffEntitiesList,new TypeToken<List<StaffDto>>() {}.getType());
+    }
     public List<StaffEntity> toStaffEntityList(List<StaffDto> staffDTOList) {
         return modelMapper.map(staffDTOList,new TypeToken<List<StaffEntity>>() {}.getType());
     }
+
+
 }
