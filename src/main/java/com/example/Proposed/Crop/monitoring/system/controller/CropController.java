@@ -60,9 +60,8 @@ public class CropController {
     }
         @GetMapping(value = "/{cropCode}", produces = MediaType.APPLICATION_JSON_VALUE)
         public CropStatus getSelectedCrop(@PathVariable ("crop_code") String crop_code){
-
-        return cropservice.getCrop(crop_code);
-    }
+            return cropservice.getCrop(crop_code);
+        }
         @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
         public List<CropDto> getAllCrops(){
         return cropservice.getAllCrops();

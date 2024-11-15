@@ -1,5 +1,6 @@
 package com.example.Proposed.Crop.monitoring.system.controller;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.FieldStatus;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.CropDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
@@ -8,11 +9,9 @@ import com.example.Proposed.Crop.monitoring.system.service.FieldService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,6 +23,7 @@ public class FieldController {
     @Autowired
     private FieldService fieldService;
 
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(
             @RequestPart("fieldCode") String fieldCode,
             @RequestPart("fieldName") String fieldName,
@@ -67,4 +67,12 @@ public class FieldController {
         }
 
     }
+
+    @GetMapping(value = "/{fieldCode}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldStatus getSelectedField(@PathVariable ("fieldCode") String fieldCode){
+        return fieldService.getField(fieldCode);
+    }
+
+
+
 }
