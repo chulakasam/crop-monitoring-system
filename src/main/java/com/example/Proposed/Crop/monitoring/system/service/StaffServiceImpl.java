@@ -4,6 +4,7 @@ import com.example.Proposed.Crop.monitoring.system.Dao.StaffDao;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
+import com.example.Proposed.Crop.monitoring.system.customStatusCodes.SelectedUserErrorStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.StaffNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,12 @@ public class StaffServiceImpl implements StaffService{
 
     @Override
     public StaffStatus getStaff(String id) {
-        return null;
+        if(staffDao.existsById(id)){
+            var selectedStaff = staffDao.getReferenceById(id);
+            return mapping.toStaffDTO(selectedStaff);
+        }else {
+            return new SelectedUserErrorStatus(2,"Selected Staff Member Not Found");
+        }
     }
 
     @Override

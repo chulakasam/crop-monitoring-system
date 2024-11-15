@@ -1,16 +1,14 @@
 package com.example.Proposed.Crop.monitoring.system.controller;
 
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
+import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/staff")
@@ -31,4 +29,12 @@ public class StaffController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping(value="/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public StaffStatus getSelectedStaffById(@PathVariable("id") String id){
+        return staffService.getStaff(id);
+    }
+
+
 }
