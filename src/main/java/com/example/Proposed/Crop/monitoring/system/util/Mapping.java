@@ -23,6 +23,9 @@ public class Mapping {
 
     public List<FieldDto> asFieldDTOList(List<FieldEntity> fieldEntityList){return modelMapper.map(fieldEntityList, new TypeToken<List<FieldDto>>(){}.getType());
     }
+    public List<FieldEntity> toFieldEntityList(List<FieldDto> fieldDTOList) {
+        return modelMapper.map(fieldDTOList,new TypeToken<List<FieldEntity>>() {}.getType());
+    }
 
     public CropEntity toCropEntity(CropDto cropDto) {
         return modelMapper.map(cropDto, CropEntity.class);
@@ -47,6 +50,9 @@ public class Mapping {
     }
 
     public List<VehicleDto> toVehicleDTOList(List<VehicleEntity> vehicleEntitiesList) {return modelMapper.map(vehicleEntitiesList,new TypeToken<List<VehicleDto>>() {}.getType());
+    }
+    public List<VehicleEntity> toVehicleEntityList(List<VehicleDto> vehicleDTOList){
+        return modelMapper.map(vehicleDTOList,new TypeToken<List<VehicleEntity>>() {}.getType());
     }
 
     public EquipmentEntity toEquipmentEntity(EquipmentDto equipmentDto) {

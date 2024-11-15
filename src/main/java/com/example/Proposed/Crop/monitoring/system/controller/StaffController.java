@@ -3,6 +3,7 @@ package com.example.Proposed.Crop.monitoring.system.controller;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
+import com.example.Proposed.Crop.monitoring.system.exception.StaffNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,20 @@ public class StaffController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDto> getAllStaff(){
         return staffService.getAllStaff();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> updateStaff(@PathVariable("id") String id,@RequestBody StaffDto staffDto){
+        try{
+            staffService.updateStaff(id,staffDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (StaffNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
