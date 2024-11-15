@@ -3,7 +3,9 @@ package com.example.Proposed.Crop.monitoring.system.service;
 import com.example.Proposed.Crop.monitoring.system.Dao.FieldDao;
 import com.example.Proposed.Crop.monitoring.system.Dto.FieldStatus;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
+import com.example.Proposed.Crop.monitoring.system.Entity.Impl.CropEntity;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
+import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
 import com.example.Proposed.Crop.monitoring.system.customStatusCodes.SelectedUserErrorStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.exception.FieldNotFoundException;
@@ -53,6 +55,24 @@ public class FieldServiceImpl implements FieldService{
             throw new FieldNotFoundException("Field not found!!!");
         }else{
             fieldDao.deleteById(fieldCode);
+        }
+    }
+
+    @Override
+    public void updateField(String fieldCode, FieldDto fieldDto) {
+        Optional<FieldEntity> fieldEntity = fieldDao.findById(fieldCode);
+        if(!fieldEntity.isPresent()){
+            throw new FieldNotFoundException("Field not found !!!!");
+        }else{
+            fieldEntity.get().setField_name(fieldDto.getField_name());
+            fieldEntity.get().setLocation(fieldDto.getLocation());
+            fieldEntity.get().setExtent_size(fieldDto.getExtent_size());
+            fieldEntity.get().setField_image1(fieldDto.getField_image1());
+            fieldEntity.get().setField_image2(fieldDto.getField_image2());
+            List<CropEntity> cropEntityList = mapping.toCropEntityList(fieldDto.getCrops());
+            fieldEntity.get().setCrops(cropEntityList);
+            List<StaffEntity> staffEntityList = mapping.toStaffEntityList(fieldDto.getAllocated_staff());
+            fieldEntity.get().setAllocated_staff(staffEntityList);
         }
     }
 

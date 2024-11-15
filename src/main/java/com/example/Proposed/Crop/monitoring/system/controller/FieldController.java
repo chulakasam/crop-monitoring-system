@@ -6,6 +6,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.exception.CropNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
+import com.example.Proposed.Crop.monitoring.system.exception.FieldNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.service.FieldService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,4 +96,21 @@ public class FieldController {
     }
 
 
+    @PutMapping(value = "/{fieldCode}")
+    public ResponseEntity<Void> updateField(@PathVariable ("fieldCode") String fieldCode,
+                                            @RequestBody FieldDto fieldDto)
+    {
+        try {
+
+            fieldService.updateField(fieldCode, fieldDto);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

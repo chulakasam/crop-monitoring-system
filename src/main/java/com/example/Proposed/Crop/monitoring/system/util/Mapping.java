@@ -1,13 +1,7 @@
 package com.example.Proposed.Crop.monitoring.system.util;
 
-import com.example.Proposed.Crop.monitoring.system.Dto.Impl.CropDto;
-import com.example.Proposed.Crop.monitoring.system.Dto.Impl.EquipmentDto;
-import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
-import com.example.Proposed.Crop.monitoring.system.Dto.Impl.VehicleDto;
-import com.example.Proposed.Crop.monitoring.system.Entity.Impl.CropEntity;
-import com.example.Proposed.Crop.monitoring.system.Entity.Impl.EquipmentEntity;
-import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
-import com.example.Proposed.Crop.monitoring.system.Entity.Impl.VehicleEntity;
+import com.example.Proposed.Crop.monitoring.system.Dto.Impl.*;
+import com.example.Proposed.Crop.monitoring.system.Entity.Impl.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +33,9 @@ public class Mapping {
     public List<CropDto> asCropDTOList(List<CropEntity> cropEntityList){
         return modelMapper.map(cropEntityList, new TypeToken<List<CropDto>>(){}.getType());
     }
+    public List<CropEntity> toCropEntityList(List<CropDto> cropDTOList) {
+        return modelMapper.map(cropDTOList,new TypeToken<List<CropEntity>>() {}.getType());
+    }
 
 
     public VehicleEntity toVehicleEntity(VehicleDto vehicleDTO) {
@@ -63,5 +60,7 @@ public class Mapping {
     }
 
 
-
+    public List<StaffEntity> toStaffEntityList(List<StaffDto> staffDTOList) {
+        return modelMapper.map(staffDTOList,new TypeToken<List<StaffEntity>>() {}.getType());
+    }
 }
