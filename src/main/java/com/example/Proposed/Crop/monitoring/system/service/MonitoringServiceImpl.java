@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -48,7 +49,12 @@ public class MonitoringServiceImpl implements MonitoringLogService{
 
     @Override
     public void deleteMonitoringLog(String logCode) {
-
+        Optional<MonitoringLogEntity> foundLog = monitoringLogDao.findById(logCode);
+        if(foundLog.isPresent()){
+            throw new MonitoringNotFoundException("Log not found");
+        }else{
+            monitoringLogDao.deleteById(logCode);
+        }
     }
 
     @Override

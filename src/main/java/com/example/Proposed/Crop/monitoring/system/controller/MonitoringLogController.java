@@ -6,6 +6,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.Impl.MonitoringLogDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.MonitoringLogStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
+import com.example.Proposed.Crop.monitoring.system.exception.MonitoringNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.service.MonitoringLogService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,19 @@ public class MonitoringLogController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MonitoringLogDto> getAllLogs(){
         return monitoringLogService.getAllMonitoringLogs();
+    }
+    @DeleteMapping(value = "/{logCode}")
+    public ResponseEntity<Void> deleteLog(@PathVariable ("logCode") String logCode){
+        try {
+
+            monitoringLogService.deleteMonitoringLog(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (MonitoringNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
