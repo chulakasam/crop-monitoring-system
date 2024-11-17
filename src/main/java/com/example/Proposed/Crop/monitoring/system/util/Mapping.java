@@ -82,4 +82,15 @@ public class Mapping {
     }
 
 
+    public MonitoringLogEntity toMonitoringLogEntity(MonitoringLogDto monitoringLogDTO) {
+        return modelMapper.map(monitoringLogDTO, MonitoringLogEntity.class);
+    }
+
+    public MonitoringLogDto toMonitoringLogDTO(MonitoringLogEntity logEntity) {
+        return modelMapper.map(logEntity, MonitoringLogDto.class);
+    }
+
+    public List<MonitoringLogDto> toMonitoringLogDTOList(List<MonitoringLogEntity> logEntitiesList) {
+        return modelMapper.map(logEntitiesList,new TypeToken<List<MonitoringLogDto>>() {}.getType());
+    }
 }

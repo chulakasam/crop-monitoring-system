@@ -14,4 +14,12 @@ public class AppUtil {
     public static String generateVehicleId(){
         return "VEHICLE-" + UUID.randomUUID();
     }
+
+    public static String observedImageOneToBase64(byte[] byteObservedImage) {
+        return Base64.getEncoder().encodeToString(byteObservedImage);
+    }
+
+    public static String generateLogId() {
+        return "Log Code-" + UUID.randomUUID();
+    }
 }
