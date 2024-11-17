@@ -4,6 +4,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.Impl.CropDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.MonitoringLogDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
+import com.example.Proposed.Crop.monitoring.system.Dto.MonitoringLogStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.service.MonitoringLogService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -58,5 +56,9 @@ public class MonitoringLogController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping(value = "/{logCode}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public MonitoringLogStatus getSelectedLog(@PathVariable ("logCode") String logCode){
+        return monitoringLogService.getMonitoringLog(logCode);
     }
 }

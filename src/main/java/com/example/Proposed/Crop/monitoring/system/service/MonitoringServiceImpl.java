@@ -5,6 +5,7 @@ import com.example.Proposed.Crop.monitoring.system.Dto.Impl.MonitoringLogDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.MonitoringLogStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.MonitoringLogEntity;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
+import com.example.Proposed.Crop.monitoring.system.exception.MonitoringNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import com.example.Proposed.Crop.monitoring.system.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,12 @@ public class MonitoringServiceImpl implements MonitoringLogService{
 
     @Override
     public MonitoringLogStatus getMonitoringLog(String logCode) {
-        return null;
+        if(monitoringLogDao.existsById(logCode)){
+            var selectedLog = monitoringLogDao.getReferenceById(logCode);
+            return mapping.toMonitoringLogDTO(selectedLog);
+        }else{
+            throw  new MonitoringNotFoundException("monitoring log not found");
+        }
     }
 
     @Override
