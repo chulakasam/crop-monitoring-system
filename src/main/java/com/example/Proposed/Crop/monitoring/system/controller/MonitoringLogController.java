@@ -80,4 +80,19 @@ public class MonitoringLogController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping(value = "/{logCode}")
+    public ResponseEntity<Void> updateLog(@PathVariable ("logCode") String logCode,
+                                          @RequestBody MonitoringLogDto monitoringLogDTO){
+        try {
+            monitoringLogService.updateMonitoringLog(logCode,monitoringLogDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (MonitoringNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
