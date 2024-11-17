@@ -61,4 +61,8 @@ public class MonitoringLogController {
     public MonitoringLogStatus getSelectedLog(@PathVariable ("logCode") String logCode){
         return monitoringLogService.getMonitoringLog(logCode);
     }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MonitoringLogDto> getAllLogs(){
+        return monitoringLogService.getAllMonitoringLogs();
+    }
 }

@@ -33,7 +33,7 @@ public class MonitoringServiceImpl implements MonitoringLogService{
 
     @Override
     public List<MonitoringLogDto> getAllMonitoringLogs() {
-        return null;
+        return mapping.toMonitoringLogDTOList(monitoringLogDao.findAll());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MonitoringServiceImpl implements MonitoringLogService{
             var selectedLog = monitoringLogDao.getReferenceById(logCode);
             return mapping.toMonitoringLogDTO(selectedLog);
         }else{
-            throw  new MonitoringNotFoundException("monitoring log not found");
+            throw new MonitoringNotFoundException("monitoring log not found");
         }
     }
 
