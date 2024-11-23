@@ -72,10 +72,10 @@ public class StaffServiceImpl implements StaffService{
             temporyStaff.get().setContact_no(staffDto.getContact_no());
             temporyStaff.get().setEmail(staffDto.getEmail());
             temporyStaff.get().setRole(staffDto.getRole());
-            List<FieldEntity> fieldEntityList = mapping.toFieldEntityList(staffDto.getFields());
-            temporyStaff.get().setFields(fieldEntityList);
-            List<VehicleEntity> vehicleEntityList = mapping.toVehicleEntityList(staffDto.getVehicles());
-            temporyStaff.get().setVehicles(vehicleEntityList);
+            //List<FieldEntity> fieldEntityList = mapping.toFieldEntityList(staffDto.getFields());
+            //temporyStaff.get().setFields(fieldEntityList);
+            //List<VehicleEntity> vehicleEntityList = mapping.toVehicleEntityList(staffDto.getVehicles());
+            //temporyStaff.get().setVehicles(vehicleEntityList);
         }
     }
 }
