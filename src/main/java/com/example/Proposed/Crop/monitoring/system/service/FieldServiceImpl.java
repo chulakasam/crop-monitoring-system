@@ -9,6 +9,7 @@ import com.example.Proposed.Crop.monitoring.system.Entity.Impl.StaffEntity;
 import com.example.Proposed.Crop.monitoring.system.customStatusCodes.SelectedUserErrorStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.exception.FieldNotFoundException;
+import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import com.example.Proposed.Crop.monitoring.system.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class FieldServiceImpl implements FieldService{
     private Mapping mapping;
     @Override
     public void saveField(FieldDto fieldDto) {
+
         FieldEntity fieldEntity = fieldDao.save(mapping.toFieldEntity(fieldDto));
         if(fieldEntity==null){
             throw new FieldNotFoundException("Field not found !!!!");
@@ -76,5 +78,13 @@ public class FieldServiceImpl implements FieldService{
         }
     }
 
+    @Override
+    public FieldDto getFieldByName(String field_code) {
+        Optional<FieldEntity> tmpField = fieldDao.findByFieldName(field_code);
+        if(!tmpField.isPresent()){
+            throw new FieldNotFoundException("Field not found: " + field_code);
+        }
+        return mapping.toFieldDTO(tmpField.get());
+    }
 
 }

@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/field")
+@CrossOrigin(origins = "http://localhost:63342")
 
 public class FieldController {
 
@@ -28,36 +29,39 @@ public class FieldController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(
-            @RequestPart("fieldCode") String fieldCode,
-            @RequestPart("fieldName") String fieldName,
-            @RequestPart("extentSize")Double extentSize,
-            @RequestPart("location") String location,
+//            @RequestParam("filedCode") String fieldCode,
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("extentSize")String extentSize,
+            @RequestParam("location") String location,
             @RequestPart("fieldImage_01")MultipartFile fieldImage_01,
             @RequestPart("fieldImage_02")MultipartFile fieldImage_02,
-            @RequestPart("crop")List<CropDto> crops,
-            @RequestPart("staff")List<StaffDto> staff
+            @RequestPart (value = "crops[]",required = false) List<CropDto> crops,
+            @RequestPart (value = "staff[]",required = false) List<StaffDto> staff
             )
     {
         String base64fieldImage_01 = "";
         String base64fieldImage_02 = "";
+        double extendSize=Double.parseDouble(extentSize);
         try{
+            String fieldCode = AppUtil.generateFieldId();
             byte [] bytesFieldImage_01 = fieldImage_01.getBytes();
-            base64fieldImage_01 = AppUtil.fieldImageToBase64(bytesFieldImage_01);
+            base64fieldImage_01 = AppUtil.fieldImageOneToBase64(bytesFieldImage_01);
 
             byte [] bytesFieldImage_02 = fieldImage_02.getBytes();
-            base64fieldImage_02 = AppUtil.fieldImageToBase64(bytesFieldImage_02);
+            base64fieldImage_02 = AppUtil.fieldImageTwoToBase64(bytesFieldImage_02);
 
 
             FieldDto fieldDto = new FieldDto();
 
             fieldDto.setField_code(fieldCode);
             fieldDto.setField_name(fieldName);
-            fieldDto.setExtent_size(extentSize);
+            fieldDto.setExtent_size(extendSize);
             fieldDto.setLocation(location);
             fieldDto.setField_image1(base64fieldImage_01);
             fieldDto.setField_image2(base64fieldImage_02);
-            fieldDto.setCrops(crops);
-            fieldDto.setAllocated_staff(staff);
+             fieldDto.setCrops(crops);
+             fieldDto.setAllocated_staff(staff);
+
 
             fieldService.saveField(fieldDto);
             return new ResponseEntity<>(HttpStatus.CREATED);

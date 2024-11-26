@@ -7,6 +7,7 @@ import com.example.Proposed.Crop.monitoring.system.customStatusCodes.SelectedUse
 import com.example.Proposed.Crop.monitoring.system.exception.CropNotFoundException;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.service.CropService;
+import com.example.Proposed.Crop.monitoring.system.service.FieldService;
 import com.example.Proposed.Crop.monitoring.system.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,18 +26,22 @@ public class CropController {
     @Autowired
     private CropService cropservice;
 
+    @Autowired
+    private FieldService fieldService;
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCrop(
-            @RequestPart("cropCode") String cropCode,
-            @RequestPart("cropName") String cropName,
-            @RequestPart("scientificName")String scientificName,
-            @RequestPart("category") String category,
-            @RequestPart("season") String season,
-            @RequestPart("image") MultipartFile image
-            //@RequestPart(" field_code")FieldDto field_code
+            @RequestParam("cropCode") String cropCode,
+            @RequestParam("cropName") String cropName,
+            @RequestParam("scientificName")String scientificName,
+            @RequestParam("category") String category,
+            @RequestParam("season") String season,
+            @RequestPart("image") MultipartFile image,
+            @RequestParam("field_code")String field_code
             ) {
         String base64cropImage_01 = "";
         try {
+           FieldDto field= fieldService.getFieldByName(field_code);
             byte[] bytesCropImage_01 = image.getBytes();
             base64cropImage_01 = AppUtil.cropImageToBase64(bytesCropImage_01);
 
@@ -48,7 +53,7 @@ public class CropController {
             cropDto.setCategory(category);
             cropDto.setSeason(season);
             cropDto.setCrop_image(base64cropImage_01);
-            //cropDto.setField(field_code);
+            cropDto.setField(field);
 
             cropservice.saveCrop(cropDto);
             return new ResponseEntity<>(HttpStatus.CREATED);

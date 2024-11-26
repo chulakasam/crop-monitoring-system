@@ -4,7 +4,10 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class AppUtil {
-    public static String fieldImageToBase64(byte[] bytesFieldImage01) {
+    public static String fieldImageOneToBase64(byte[] bytesFieldImage01) {
+        return Base64.getEncoder().encodeToString(bytesFieldImage01);
+    }
+    public static String fieldImageTwoToBase64(byte[] bytesFieldImage01) {
         return Base64.getEncoder().encodeToString(bytesFieldImage01);
     }
 
@@ -21,5 +24,9 @@ public class AppUtil {
 
     public static String generateLogId() {
         return "Log Code-" + UUID.randomUUID();
+    }
+
+    public static String generateFieldId() {
+        return "FIELD" + UUID.randomUUID();
     }
 }
