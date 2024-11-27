@@ -1,6 +1,7 @@
 package com.example.Proposed.Crop.monitoring.system.Entity.Impl;
 
 import com.example.Proposed.Crop.monitoring.system.Entity.SuperEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,9 @@ public class FieldEntity implements SuperEntity {
     @Column(columnDefinition = "LONGTEXT")
     private String field_image2;
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<CropEntity> crops;
     @ManyToMany(mappedBy = "fields")
+    @JsonManagedReference
     private List<StaffEntity> allocated_staff;
 }

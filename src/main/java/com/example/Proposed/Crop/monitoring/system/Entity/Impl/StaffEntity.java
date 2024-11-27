@@ -1,6 +1,7 @@
 package com.example.Proposed.Crop.monitoring.system.Entity.Impl;
 
 import com.example.Proposed.Crop.monitoring.system.Entity.SuperEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class StaffEntity implements SuperEntity {
     @ManyToMany
     @JoinTable(name = "Field_Staff_assignment",joinColumns = @JoinColumn(name = "staff_id"),
             inverseJoinColumns = @JoinColumn(name = "field_code"))
+    @JsonBackReference
     private List<FieldEntity> fields;
     @OneToMany(mappedBy = "assigned_staff",cascade = CascadeType.ALL)
     private List<VehicleEntity> vehicles;

@@ -59,8 +59,8 @@ public class FieldController {
             fieldDto.setLocation(location);
             fieldDto.setField_image1(base64fieldImage_01);
             fieldDto.setField_image2(base64fieldImage_02);
-             fieldDto.setCrops(crops);
-             fieldDto.setAllocated_staff(staff);
+            fieldDto.setCrops(crops);
+            fieldDto.setAllocated_staff(staff);
 
 
             fieldService.saveField(fieldDto);

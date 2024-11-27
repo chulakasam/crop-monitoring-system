@@ -1,5 +1,7 @@
 package com.example.Proposed.Crop.monitoring.system.Entity.Impl;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +23,6 @@ public class CropEntity {
     private String season;
     @ManyToOne
     @JoinColumn(name = "field_code")
+    @JsonBackReference
     private FieldEntity field;
 }
