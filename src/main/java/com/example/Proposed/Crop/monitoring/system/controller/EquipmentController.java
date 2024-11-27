@@ -33,7 +33,7 @@ public class EquipmentController {
             }
     }
     @GetMapping(value = "/{equipmentId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public EquipmentStatus getSelectEquipmentById(String equipmentId){
+    public EquipmentStatus getSelectEquipmentById(@PathVariable("equipmentId") String equipmentId){
         return equipmentService.getEquipment(equipmentId);
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
