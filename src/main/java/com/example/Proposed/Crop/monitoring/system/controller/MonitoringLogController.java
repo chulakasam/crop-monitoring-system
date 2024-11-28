@@ -20,17 +20,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/logs")
+@CrossOrigin(origins = "http://localhost:63342")
 public class MonitoringLogController {
     @Autowired
     private MonitoringLogService monitoringLogService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveMonitoringLog(
-                                        @RequestPart("logDate") String logDate,
-                                        @RequestPart ("logDetails") String logDetails,
+                                        @RequestParam("logDate") String logDate,
+                                        @RequestParam("logDetails") String logDetails,
                                         @RequestPart ("observedImage") MultipartFile observedImage,
-                                        @RequestPart ("fields") List<FieldDto> fields,
-                                        @RequestPart ("crops") List<CropDto> crops,
-                                        @RequestPart ("staff") List<StaffDto> staff
+                                        @RequestPart (value = "fields[]",required = false) List<FieldDto> fields,
+                                        @RequestPart (value = "crops[]",required = false) List<CropDto> crops,
+                                        @RequestPart (value = "staff[]",required = false) List<StaffDto> staff
     )
     {
         String base64ObservedImage = "";
