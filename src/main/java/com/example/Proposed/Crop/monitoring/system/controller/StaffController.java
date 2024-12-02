@@ -1,9 +1,11 @@
 package com.example.Proposed.Crop.monitoring.system.controller;
 
+import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.exception.DataPersistException;
 import com.example.Proposed.Crop.monitoring.system.exception.StaffNotFoundException;
+import com.example.Proposed.Crop.monitoring.system.service.FieldService;
 import com.example.Proposed.Crop.monitoring.system.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/staff")
@@ -19,10 +22,18 @@ import java.util.List;
 public class StaffController {
 @Autowired
     private StaffService staffService;
+    @Autowired
+    private FieldService fieldService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDto staffDto){
         try {
+            List<String> field_code = staffDto.getFields()
+                    .stream()
+                    .map(FieldDto::getField_code)
+                    .collect(Collectors.toList());
+            List<FieldDto> fields = fieldService.getFieldListByName(field_code);
+            staffDto.setFields(fields);
             staffService.saveStaff(staffDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){

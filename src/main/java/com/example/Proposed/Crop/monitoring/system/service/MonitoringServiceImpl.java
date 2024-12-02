@@ -53,7 +53,7 @@ public class MonitoringServiceImpl implements MonitoringLogService{
     @Override
     public void deleteMonitoringLog(String logCode) {
         Optional<MonitoringLogEntity> foundLog = monitoringLogDao.findById(logCode);
-        if(foundLog.isPresent()){
+        if(!foundLog.isPresent()){
             throw new MonitoringNotFoundException("Log not found");
         }else{
             monitoringLogDao.deleteById(logCode);

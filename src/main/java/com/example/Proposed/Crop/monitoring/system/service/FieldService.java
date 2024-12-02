@@ -17,4 +17,6 @@ public interface FieldService {
     void updateField(String fieldCode, FieldDto fieldDto);
 
     FieldDto getFieldByName(String field_code);
+
+    List<FieldDto> getFieldListByName(List<String> field_code);
 }

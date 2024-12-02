@@ -1,6 +1,8 @@
 package com.example.Proposed.Crop.monitoring.system.service;
 
+import com.example.Proposed.Crop.monitoring.system.Dao.FieldDao;
 import com.example.Proposed.Crop.monitoring.system.Dao.StaffDao;
+import com.example.Proposed.Crop.monitoring.system.Dto.Impl.FieldDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.Impl.StaffDto;
 import com.example.Proposed.Crop.monitoring.system.Dto.StaffStatus;
 import com.example.Proposed.Crop.monitoring.system.Entity.Impl.FieldEntity;
@@ -13,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,6 +27,8 @@ public class StaffServiceImpl implements StaffService{
     private Mapping mapping;
     @Autowired
     private StaffDao staffDao;
+    @Autowired
+    private FieldDao fieldDao;
     @Override
     public void saveStaff(StaffDto staffDto) {
         StaffEntity staffEntity = staffDao.save(mapping.toStaffEntity(staffDto));
@@ -33,7 +39,32 @@ public class StaffServiceImpl implements StaffService{
 
     @Override
     public List<StaffDto> getAllStaff() {
-        return mapping.toStaffDTOList(staffDao.findAll());
+        List<StaffEntity> staffs = staffDao.findAll();
+        return staffs.stream()
+                .map(staff -> {
+                    StaffDto staffDTO = new StaffDto();
+                    staffDTO.setId(staff.getId());
+                    staffDTO.setFirst_name(staff.getFirst_name());
+                    staffDTO.setLast_name(staff.getLast_name());
+                    staffDTO.setDesignation(staff.getDesignation());
+                    staffDTO.setGender(staff.getGender());
+                    staffDTO.setJoined_date(staff.getJoined_date());
+                    staffDTO.setDob(staff.getDob());
+                    staffDTO.setAddress(staff.getAddress());
+                    staffDTO.setContact_no(staff.getContact_no());
+                    staffDTO.setEmail(staff.getEmail());
+                    staffDTO.setRole(staff.getRole());
+                    List<FieldDto> assignedFieldDTO = new ArrayList<>();
+                    for (FieldEntity field : staff.getFields()) {
+                        Optional<FieldEntity> fieldOpt = fieldDao.findById(field.getField_name());
+                        if (fieldOpt.isPresent()) {
+                            assignedFieldDTO.add(mapping.toFieldDTO(fieldOpt.get()));
+                        }
+                    }
+                    staffDTO.setFields(assignedFieldDTO);
+                    return staffDTO;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

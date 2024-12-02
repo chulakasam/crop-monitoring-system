@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,7 +49,22 @@ public class FieldServiceImpl implements FieldService{
 
     @Override
     public List<FieldDto> getAllFields() {
-        return mapping.asFieldDTOList(fieldDao.findAll());
+        List<FieldEntity> fields = fieldDao.findAll();
+        return fields.stream()
+                .map(field -> {
+                    FieldDto fieldDTO = new FieldDto();
+                    fieldDTO.setField_code(field.getField_code());
+                    fieldDTO.setField_name(field.getField_name());
+                    fieldDTO.setLocation(field.getLocation());
+                    fieldDTO.setExtent_size(field.getExtent_size());
+                    fieldDTO.setField_image1(field.getField_image1());
+                    fieldDTO.setField_image2(field.getField_image2());
+
+                    return fieldDTO;
+                })
+                .collect(Collectors.toList());
+
+
     }
 
     @Override
@@ -85,6 +102,24 @@ public class FieldServiceImpl implements FieldService{
             throw new FieldNotFoundException("Field not found: " + field_code);
         }
         return mapping.toFieldDTO(tmpField.get());
+    }
+
+    @Override
+    public List<FieldDto> getFieldListByName(List<String> field_code) {
+        if(field_code == null || field_code.isEmpty()){
+            return Collections.emptyList();
+        }
+
+        List<FieldEntity> fieldEntities = fieldDao.findByFieldNameList(field_code);
+
+        if(fieldEntities.isEmpty()){
+            throw new FieldNotFoundException("Field not found");
+        }
+
+        return fieldEntities.stream()
+                .map(mapping::toFieldDTO)
+                .collect(Collectors.toList());
+
     }
 
 }
