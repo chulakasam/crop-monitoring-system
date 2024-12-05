@@ -1,16 +1,13 @@
-package com.example.Proposed.Crop.monitoring.system.secure;
+package com.example.Proposed.Crop.monitoring.system.Dto.Impl;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Builder
-
-public class SignIn {
+public class PasswordDto {
     private String email;
-    private String password;
+    private String newPassword;
 }
